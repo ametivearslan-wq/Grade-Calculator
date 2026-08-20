@@ -21,9 +21,7 @@
       --success: #10b981;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -47,7 +45,6 @@
       box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
       border: 1px solid rgba(226, 232, 240, 0.8);
       overflow: hidden;
-      transition: transform 0.3s ease;
     }
 
     .header {
@@ -55,7 +52,6 @@
       color: #ffffff;
       padding: 32px 24px 28px;
       text-align: center;
-      position: relative;
     }
 
     .school-badge {
@@ -68,7 +64,6 @@
       border-radius: 50px;
       font-size: 0.8rem;
       font-weight: 600;
-      letter-spacing: 0.5px;
       color: #93c5fd;
       border: 1px solid rgba(255, 255, 255, 0.15);
       margin-bottom: 12px;
@@ -79,7 +74,6 @@
       margin: 0;
       font-size: 1.6rem;
       font-weight: 800;
-      letter-spacing: -0.5px;
     }
 
     .header p {
@@ -88,9 +82,7 @@
       font-size: 0.88rem;
     }
 
-    .body-content {
-      padding: 28px 24px;
-    }
+    .body-content { padding: 28px 24px; }
 
     .section-title {
       font-size: 0.95rem;
@@ -100,9 +92,6 @@
       color: var(--accent);
       margin-top: 0;
       margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
 
     .input-grid {
@@ -117,13 +106,6 @@
       border: 1px solid var(--border);
       padding: 14px;
       border-radius: 14px;
-      transition: all 0.2s ease;
-    }
-
-    .input-card:focus-within {
-      border-color: var(--accent);
-      background: #ffffff;
-      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
     }
 
     .input-card label {
@@ -135,11 +117,7 @@
       text-transform: uppercase;
     }
 
-    .input-wrapper {
-      display: flex;
-      align-items: baseline;
-      gap: 4px;
-    }
+    .input-wrapper { display: flex; align-items: baseline; gap: 4px; }
 
     .input-card input {
       width: 100%;
@@ -152,11 +130,7 @@
       outline: none;
     }
 
-    .max-tag {
-      font-size: 0.85rem;
-      color: var(--muted);
-      font-weight: 600;
-    }
+    .max-tag { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
 
     .progress-bar-bg {
       height: 4px;
@@ -175,7 +149,6 @@
       transition: width 0.3s ease, background 0.3s ease;
     }
 
-    /* Results Dashboard */
     .dashboard-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -183,19 +156,12 @@
       margin-bottom: 28px;
     }
 
-    @media (max-width: 520px) {
-      .dashboard-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+    @media (max-width: 520px) { .dashboard-grid { grid-template-columns: 1fr; } }
 
     .dash-card {
       background: #f1f5f9;
       border-radius: 16px;
       padding: 18px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
       border: 1px solid #e2e8f0;
     }
 
@@ -209,21 +175,11 @@
       font-weight: 700;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
-    .dash-value-group {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      margin-top: 8px;
-    }
+    .dash-value-group { display: flex; align-items: baseline; gap: 8px; margin-top: 8px; }
 
-    .dash-value {
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: var(--primary);
-    }
+    .dash-value { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
 
     .grade-badge {
       display: inline-flex;
@@ -237,21 +193,14 @@
       font-size: 1.3rem;
       font-weight: 800;
       margin-left: auto;
-      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
     }
 
-    /* Target Selector */
     .target-box {
       background: #ffffff;
       border: 2px solid #e2e8f0;
       border-radius: 16px;
       padding: 16px;
       margin-bottom: 24px;
-      transition: border-color 0.2s ease;
-    }
-
-    .target-box:hover {
-      border-color: var(--accent);
     }
 
     .target-box select {
@@ -267,38 +216,39 @@
       margin-top: 4px;
     }
 
-    /* Target Requirement Result */
     .requirement-card {
       background: var(--primary);
       color: #ffffff;
       border-radius: 16px;
       padding: 20px;
       text-align: center;
-      position: relative;
-      overflow: hidden;
+      margin-bottom: 28px;
     }
 
-    .req-title {
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #94a3b8;
+    .req-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: #94a3b8; }
+    .req-value { font-size: 1.8rem; font-weight: 800; color: #38bdf8; margin: 6px 0; }
+    .req-subtext { font-size: 0.82rem; color: #cbd5e1; }
+
+    /* NEW FEATURE: Minimum Threshold Reference Styles */
+    .lookup-card {
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 10px;
     }
 
-    .req-value {
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: #38bdf8;
-      margin: 6px 0;
+    .lookup-result {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: 12px;
+      border: 1px solid #e2e8f0;
+      font-size: 0.88rem;
     }
 
-    .req-subtext {
-      font-size: 0.82rem;
-      color: #cbd5e1;
-    }
+    .lookup-result strong { color: var(--accent); }
 
-    /* Footer Credit */
     .footer-credit {
       text-align: center;
       padding: 20px 24px;
@@ -309,26 +259,20 @@
       font-weight: 600;
     }
 
-    .footer-credit span {
-      color: #ef4444;
-    }
+    .footer-credit span { color: #ef4444; }
   </style>
 </head>
 <body>
 
 <div class="calculator-card">
-  <!-- Header with School Branding -->
   <div class="header">
-    <div class="school-badge">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-      Spectrum International School, Astana
-    </div>
+    <div class="school-badge">Spectrum International School, Astana</div>
     <h1>A-Level Physics (9702) Calculator</h1>
     <p>Components 12, 22, 33 → Target A2 (42, 52)</p>
   </div>
 
   <div class="body-content">
-    <!-- Step 1: Input Marks -->
+    <!-- Existing Calculator Inputs -->
     <div class="section-title">1. AS Level Raw Marks</div>
     <div class="input-grid">
       <div class="input-card">
@@ -359,7 +303,7 @@
       </div>
     </div>
 
-    <!-- AS Dashboard Result -->
+    <!-- Existing Dashboard -->
     <div class="dashboard-grid">
       <div class="dash-card">
         <div class="dash-title">AS Weighted Score</div>
@@ -377,10 +321,9 @@
       </div>
     </div>
 
-    <!-- Step 2: Goal Target -->
+    <!-- Existing Target Goal Section -->
     <div class="section-title">2. Set Desired A-Level Grade</div>
     <div class="target-box">
-      <label style="font-size: 0.75rem; font-weight:800; color:var(--muted); text-transform:uppercase;">Target Grade</label>
       <select id="targetGrade" onchange="calculate()">
         <option value="203">Grade A* (Threshold: 203 / 260)</option>
         <option value="177" selected>Grade A (Threshold: 177 / 260)</option>
@@ -391,15 +334,38 @@
       </select>
     </div>
 
-    <!-- Final A2 Requirement Card -->
     <div class="requirement-card">
       <div class="req-title">Combined A2 Target (Paper 42 + Paper 52)</div>
       <div class="req-value" id="a2Requirement">Enter AS marks above</div>
       <div class="req-subtext" id="a2Subtext">P42 is out of 100 raw marks • P52 is out of 30 raw marks</div>
     </div>
+
+    <!-- NEW FEATURE: Quick Threshold Finder -->
+    <div class="section-title">3. Minimum Threshold Lookup</div>
+    <div class="lookup-card">
+      <label style="font-size: 0.75rem; font-weight:800; color:var(--muted); text-transform:uppercase;">Select Grade to View Minimum Requirements:</label>
+      <div class="target-box" style="margin-top: 8px; margin-bottom: 0;">
+        <select id="lookupSelect" onchange="lookupGradeInfo()">
+          <option value="A_star">A-Level: Grade A*</option>
+          <option value="A_alevel" selected>A-Level: Grade A</option>
+          <option value="B_alevel">A-Level: Grade B</option>
+          <option value="C_alevel">A-Level: Grade C</option>
+          <option value="D_alevel">A-Level: Grade D</option>
+          <option value="E_alevel">A-Level: Grade E</option>
+          <option value="a_as">AS-Level: Grade a</option>
+          <option value="b_as">AS-Level: Grade b</option>
+          <option value="c_as">AS-Level: Grade c</option>
+          <option value="d_as">AS-Level: Grade d</option>
+          <option value="e_as">AS-Level: Grade e</option>
+        </select>
+      </div>
+
+      <div class="lookup-result" id="lookupDetails">
+        <!-- Javascript populates details here -->
+      </div>
+    </div>
   </div>
 
-  <!-- Footer with Personal Teacher Credit -->
   <div class="footer-credit">
     Crafted with <span>❤️</span> by <strong>Mr. Arslan</strong> for his students
   </div>
@@ -428,11 +394,9 @@
     const p33 = parseFloat(document.getElementById('p33').value) || 0;
     const targetThreshold = parseFloat(document.getElementById('targetGrade').value);
 
-    // AS Weighted Score Calculation (P33 factor = 0.75)
     const asWeighted = p12 + p22 + (p33 * 0.75);
     document.getElementById('asWeighted').innerText = asWeighted.toFixed(1);
 
-    // Grade Determination
     let asGrade = 'U';
     if (asWeighted >= 95) asGrade = 'a';
     else if (asWeighted >= 83) asGrade = 'b';
@@ -442,7 +406,6 @@
     
     document.getElementById('asGrade').innerText = asGrade;
 
-    // A2 Target Calculation
     const neededA2Weighted = targetThreshold - asWeighted;
     const a2ReqElement = document.getElementById('a2Requirement');
     const a2SubtextElement = document.getElementById('a2Subtext');
@@ -455,13 +418,41 @@
       a2SubtextElement.innerText = `Requires ${neededA2Weighted.toFixed(1)} marks in A2 (Max possible is 130).`;
     } else {
       a2ReqElement.innerText = `${neededA2Weighted.toFixed(1)} / 130 marks`;
-      
-      // Breakdown estimate based on proportional paper split (100:30)
       const estP42 = Math.min(100, Math.round(neededA2Weighted * (100 / 130)));
       const estP52 = Math.min(30, Math.round(neededA2Weighted * (30 / 130)));
       a2SubtextElement.innerText = `Suggested split: ~${estP42}/100 in Paper 42 and ~${estP52}/30 in Paper 52.`;
     }
   }
+
+  // NEW FUNCTION: Handles quick grade threshold lookup
+  function lookupGradeInfo() {
+    const val = document.getElementById('lookupSelect').value;
+    const details = document.getElementById('lookupDetails');
+
+    const lookupData = {
+      'A_star': { level: 'Full A-Level', grade: 'A*', total: '203 / 260', desc: 'Typical component raw mark targets: ~30/40 in P12, ~40/60 in P22, ~33/40 in P33, ~80+/100 in P42, and ~20+/30 in P52.' },
+      'A_alevel': { level: 'Full A-Level', grade: 'A', total: '177 / 260', desc: 'Minimum component thresholds: ~30/40 in P12, ~40/60 in P22, ~33/40 in P33, ~62/100 in P42, and ~20/30 in P52.' },
+      'B_alevel': { level: 'Full A-Level', grade: 'B', total: '151 / 260', desc: 'Minimum component thresholds: ~25/40 in P12, ~35/60 in P22, ~30/40 in P33, ~51/100 in P42, and ~17/30 in P52.' },
+      'C_alevel': { level: 'Full A-Level', grade: 'C', total: '126 / 260', desc: 'Minimum component thresholds: ~21/40 in P12, ~30/60 in P22, ~26/40 in P33, ~41/100 in P42, and ~14/30 in P52.' },
+      'D_alevel': { level: 'Full A-Level', grade: 'D', total: '101 / 260', desc: 'Minimum component thresholds: ~18/40 in P12, ~24/60 in P22, ~23/40 in P33, ~31/100 in P42, and ~11/30 in P52.' },
+      'E_alevel': { level: 'Full A-Level', grade: 'E', total: '76 / 260', desc: 'Minimum component thresholds: ~15/40 in P12, ~17/60 in P22, ~20/40 in P33, ~21/100 in P42, and ~8/30 in P52.' },
+      'a_as': { level: 'AS-Level', grade: 'a', total: '95 / 130', desc: 'Component targets: ~30/40 in P12, ~40/60 in P22, and ~33/40 in P33.' },
+      'b_as': { level: 'AS-Level', grade: 'b', total: '83 / 130', desc: 'Component targets: ~25/40 in P12, ~35/60 in P22, and ~30/40 in P33.' },
+      'c_as': { level: 'AS-Level', grade: 'c', total: '71 / 130', desc: 'Component targets: ~21/40 in P12, ~30/60 in P22, and ~26/40 in P33.' },
+      'd_as': { level: 'AS-Level', grade: 'd', total: '59 / 130', desc: 'Component targets: ~18/40 in P12, ~24/60 in P22, and ~23/40 in P33.' },
+      'e_as': { level: 'AS-Level', grade: 'e', total: '47 / 130', desc: 'Component targets: ~15/40 in P12, ~17/60 in P22, and ~20/40 in P33.' }
+    };
+
+    const item = lookupData[val];
+    details.innerHTML = `
+      <strong>${item.level} Grade ${item.grade}</strong><br>
+      • <strong>Min Weighted Score Needed:</strong> ${item.total}<br>
+      • <strong>Raw Mark Benchmark:</strong> ${item.desc}
+    `;
+  }
+
+  // Initialize lookup on load
+  lookupGradeInfo();
 </script>
 
 </body>
