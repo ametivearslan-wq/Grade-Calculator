@@ -6,24 +6,47 @@
     <title>A Level Physics (9702) Grade & Target Calculator</title>
     <style>
         :root {
-            --bg-color: #f0f4f8;
+            --bg-gradient: linear-gradient(135deg, #e0f2fe 0%, #f3e8ff 100%);
             --card-bg: #ffffff;
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
             --accent-teal: #0d9488;
             --accent-purple: #7c3aed;
+            --accent-red: #ef4444;
             --text-main: #1e293b;
+            --text-sub: #64748b;
             --border: #cbd5e1;
+            --card-border: #e2e8f0;
+            --control-bg: linear-gradient(90deg, #eff6ff 0%, #f5f3ff 100%);
+            --table-header: #f1f5f9;
+            --footer-bg: #f8fafc;
+        }
+
+        body.dark-mode {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --card-bg: #1e293b;
+            --primary: #3b82f6;
+            --primary-dark: #60a5fa;
+            --accent-teal: #14b8a6;
+            --accent-purple: #a855f7;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --border: #475569;
+            --card-border: #334155;
+            --control-bg: #0f172a;
+            --table-header: #334155;
+            --footer-bg: #0f172a;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: linear-gradient(135deg, #e0f2fe 0%, #f3e8ff 100%);
+            background: var(--bg-gradient);
             color: var(--text-main);
             margin: 0;
             padding: 16px 8px;
             display: flex;
             justify-content: center;
+            transition: background 0.3s, color 0.3s;
         }
 
         .container {
@@ -32,8 +55,27 @@
             background: var(--card-bg);
             padding: 24px 18px;
             border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
             box-sizing: border-box;
+            position: relative;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .theme-toggle-btn {
+            background: var(--border);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: var(--text-main);
         }
 
         .header {
@@ -48,14 +90,14 @@
         }
 
         p.subtitle {
-            color: #64748b;
+            color: var(--text-sub);
             font-size: 0.9rem;
             margin: 0;
         }
 
         .controls-card {
-            background: linear-gradient(90deg, #eff6ff 0%, #f5f3ff 100%);
-            border: 1px solid #bfdbfe;
+            background: var(--control-bg);
+            border: 1px solid var(--border);
             border-radius: 12px;
             padding: 16px;
             display: grid;
@@ -68,7 +110,7 @@
             display: block;
             font-weight: 700;
             font-size: 0.85rem;
-            color: #334155;
+            color: var(--text-main);
             margin-bottom: 6px;
         }
 
@@ -79,7 +121,23 @@
             border: 1px solid var(--border);
             font-size: 0.95rem;
             box-sizing: border-box;
-            background-color: #fff;
+            background-color: var(--card-bg);
+            color: var(--text-main);
+        }
+
+        /* Validation Style for Exceeded Limits */
+        input.invalid-input {
+            border: 2px solid var(--accent-red) !important;
+            background-color: #fef2f2 !important;
+            color: #991b1b !important;
+        }
+
+        .error-msg {
+            color: var(--accent-red);
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-top: 4px;
+            display: none;
         }
 
         .section-title {
@@ -98,15 +156,10 @@
         }
 
         .input-card {
-            background: #ffffff;
-            border: 2px solid #e2e8f0;
+            background: var(--card-bg);
+            border: 2px solid var(--card-border);
             padding: 14px;
             border-radius: 12px;
-        }
-
-        .input-card.a2-card {
-            background: #faf5ff;
-            border-color: #e9d5ff;
         }
 
         .input-card label {
@@ -131,7 +184,7 @@
 
         .note {
             font-size: 0.78rem;
-            color: #64748b;
+            color: var(--text-sub);
             margin-top: 4px;
         }
 
@@ -146,6 +199,12 @@
             font-weight: 600;
         }
 
+        body.dark-mode .target-suggestion {
+            background: #064e3b;
+            border-color: #047857;
+            color: #a7f3d0;
+        }
+
         .btn-group {
             display: flex;
             gap: 10px;
@@ -155,7 +214,7 @@
 
         .action-btn {
             flex: 1;
-            min-width: 140px;
+            min-width: 120px;
             padding: 12px;
             border-radius: 8px;
             border: none;
@@ -168,6 +227,7 @@
         .action-btn:active { opacity: 0.8; }
         .btn-save { background: var(--accent-teal); color: white; }
         .btn-print { background: var(--primary); color: white; }
+        .btn-reset { background: var(--accent-red); color: white; }
 
         .results-panel {
             background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
@@ -192,7 +252,7 @@
 
         .target-status-badge {
             background: #ffffff;
-            color: var(--primary-dark);
+            color: #1e3a8a;
             padding: 6px 14px;
             border-radius: 20px;
             font-weight: 700;
@@ -213,7 +273,7 @@
             margin-top: 16px;
             font-size: 0.85rem;
             background: white;
-            color: var(--text-main);
+            color: #1e293b;
             border-radius: 8px;
             overflow: hidden;
         }
@@ -225,7 +285,7 @@
         }
 
         .threshold-table th {
-            background: #f1f5f9;
+            background: var(--table-header);
             color: #334155;
             font-weight: 700;
         }
@@ -233,12 +293,12 @@
         .author-footer {
             margin-top: 24px;
             padding: 16px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
+            background: var(--footer-bg);
+            border: 1px solid var(--card-border);
             border-radius: 10px;
             text-align: center;
             font-size: 0.85rem;
-            color: #475569;
+            color: var(--text-sub);
             line-height: 1.5;
         }
 
@@ -249,7 +309,7 @@
         @media print {
             body { background: none; color: #000; padding: 0; }
             .container { box-shadow: none; max-width: 100%; padding: 0; }
-            .btn-group, .controls-card, input[type="range"] { display: none !important; }
+            .btn-group, .controls-card, input[type="range"], .theme-toggle-btn { display: none !important; }
             .input-card { border: 1px solid #ccc; background: #fff !important; page-break-inside: avoid; }
             .results-panel { background: #f8fafc !important; color: #000 !important; border: 2px solid #2563eb; box-shadow: none; }
             .total-score { color: #1e3a8a; }
@@ -261,6 +321,11 @@
 <body>
 
 <div class="container">
+    <div class="header-top">
+        <span></span>
+        <button class="theme-toggle-btn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+    </div>
+
     <div class="header">
         <h1>A Level Physics (9702) Grade Calculator</h1>
         <p class="subtitle">AS Carry-Forward Analysis & Target Score Generator</p>
@@ -310,59 +375,65 @@
         <div class="input-card">
             <div class="input-header">
                 <label for="p1">Paper 1 (MCQ)</label>
-                <input type="number" id="p1" min="0" max="40" placeholder="0" style="width: 70px;" oninput="syncRange('p1')">
+                <input type="number" id="p1" min="0" max="40" placeholder="0" style="width: 70px;" oninput="syncRange('p1', 40)">
             </div>
-            <input type="range" id="p1_range" min="0" max="40" value="0" oninput="syncInput('p1')">
+            <input type="range" id="p1_range" min="0" max="40" value="0" oninput="syncInput('p1', 40)">
             <div class="note">Max Raw: 40 | Weight: 1.0</div>
+            <div class="error-msg" id="p1_err">Exceeds max mark (40)!</div>
         </div>
 
         <div class="input-card">
             <div class="input-header">
                 <label for="p2">Paper 2 (AS Structured)</label>
-                <input type="number" id="p2" min="0" max="60" placeholder="0" style="width: 70px;" oninput="syncRange('p2')">
+                <input type="number" id="p2" min="0" max="60" placeholder="0" style="width: 70px;" oninput="syncRange('p2', 60)">
             </div>
-            <input type="range" id="p2_range" min="0" max="60" value="0" oninput="syncInput('p2')">
+            <input type="range" id="p2_range" min="0" max="60" value="0" oninput="syncInput('p2', 60)">
             <div class="note">Max Raw: 60 | Weight: 1.0</div>
+            <div class="error-msg" id="p2_err">Exceeds max mark (60)!</div>
         </div>
 
         <div class="input-card">
             <div class="input-header">
                 <label for="p3">Paper 3 (Practical)</label>
-                <input type="number" id="p3" min="0" max="40" placeholder="0" style="width: 70px;" oninput="syncRange('p3')">
+                <input type="number" id="p3" min="0" max="40" placeholder="0" style="width: 70px;" oninput="syncRange('p3', 40)">
             </div>
-            <input type="range" id="p3_range" min="0" max="40" value="0" oninput="syncInput('p3')">
+            <input type="range" id="p3_range" min="0" max="40" value="0" oninput="syncInput('p3', 40)">
             <div class="note">Max Raw: 40 | Weight: 0.75</div>
+            <div class="error-msg" id="p3_err">Exceeds max mark (40)!</div>
         </div>
     </div>
 
     <!-- A2 Components -->
     <div class="section-title a2">📙 Step 2: Estimated A2 Marks</div>
     <div class="grid">
-        <div class="input-card a2-card">
+        <div class="input-card">
             <div class="input-header">
                 <label for="p4">Paper 4 (A2 Structured)</label>
-                <input type="number" id="p4" min="0" max="100" placeholder="0" style="width: 70px;" oninput="syncRange('p4')">
+                <input type="number" id="p4" min="0" max="100" placeholder="0" style="width: 70px;" oninput="syncRange('p4', 100)">
             </div>
-            <input type="range" id="p4_range" min="0" max="100" value="0" oninput="syncInput('p4')">
+            <input type="range" id="p4_range" min="0" max="100" value="0" oninput="syncInput('p4', 100)">
             <div class="note">Max Raw: 100 | Weight: 1.0</div>
+            <div class="error-msg" id="p4_err">Exceeds max mark (100)!</div>
             <div class="target-suggestion" id="suggP4">Suggested: --</div>
         </div>
 
-        <div class="input-card a2-card">
+        <div class="input-card">
             <div class="input-header">
                 <label for="p5">Paper 5 (Planning & Eval)</label>
-                <input type="number" id="p5" min="0" max="30" placeholder="0" style="width: 70px;" oninput="syncRange('p5')">
+                <input type="number" id="p5" min="0" max="30" placeholder="0" style="width: 70px;" oninput="syncRange('p5', 30)">
             </div>
-            <input type="range" id="p5_range" min="0" max="30" value="0" oninput="syncInput('p5')">
+            <input type="range" id="p5_range" min="0" max="30" value="0" oninput="syncInput('p5', 30)">
             <div class="note">Max Raw: 30 | Weight: 1.0</div>
+            <div class="error-msg" id="p5_err">Exceeds max mark (30)!</div>
             <div class="target-suggestion" id="suggP5">Suggested: --</div>
         </div>
     </div>
 
     <!-- Storage & Print Actions -->
     <div class="btn-group">
+        <button class="action-btn btn-reset" onclick="resetCalculator()">🔄 Reset All</button>
         <button class="action-btn btn-save" onclick="saveToLocalStorage()">💾 Save Prediction</button>
-        <button class="action-btn btn-print" onclick="window.print()">🖨️ Export / Print PDF</button>
+        <button class="action-btn btn-print" onclick="window.print()">🖨️ Export PDF</button>
     </div>
 
     <!-- Output Panel -->
@@ -424,14 +495,30 @@
         lenient:  { Astar: 185, A: 158, B: 130, C: 105, D: 81,  E: 58 }
     };
 
-    function syncInput(id) {
+    function validateField(id, max) {
+        const inputElem = document.getElementById(id);
+        const errElem = document.getElementById(id + '_err');
+        const val = parseFloat(inputElem.value) || 0;
+
+        if (val > max) {
+            inputElem.classList.add('invalid-input');
+            if(errElem) errElem.style.display = 'block';
+        } else {
+            inputElem.classList.remove('invalid-input');
+            if(errElem) errElem.style.display = 'none';
+        }
+    }
+
+    function syncInput(id, max) {
         document.getElementById(id).value = document.getElementById(id + '_range').value;
+        validateField(id, max);
         calculateMarks();
     }
 
-    function syncRange(id) {
+    function syncRange(id, max) {
         const val = document.getElementById(id).value;
         document.getElementById(id + '_range').value = val === "" ? 0 : val;
+        validateField(id, max);
         calculateMarks();
     }
 
@@ -449,19 +536,12 @@
         const boundaries = dataset[seriesKey];
         const cushion = parseInt(document.getElementById('cushionInput').value) || 0;
 
-        const effAstar = boundaries.Astar + cushion;
-        const effA     = boundaries.A + cushion;
-        const effB     = boundaries.B + cushion;
-        const effC     = boundaries.C + cushion;
-        const effD     = boundaries.D + cushion;
-        const effE     = boundaries.E + cushion;
-
-        document.getElementById('t-Astar').innerText = effAstar;
-        document.getElementById('t-A').innerText = effA;
-        document.getElementById('t-B').innerText = effB;
-        document.getElementById('t-C').innerText = effC;
-        document.getElementById('t-D').innerText = effD;
-        document.getElementById('t-E').innerText = effE;
+        document.getElementById('t-Astar').innerText = boundaries.Astar + cushion;
+        document.getElementById('t-A').innerText = boundaries.A + cushion;
+        document.getElementById('t-B').innerText = boundaries.B + cushion;
+        document.getElementById('t-C').innerText = boundaries.C + cushion;
+        document.getElementById('t-D').innerText = boundaries.D + cushion;
+        document.getElementById('t-E').innerText = boundaries.E + cushion;
 
         document.getElementById('totalScore').innerText = totalWeighted;
         document.getElementById('asCarryText').innerHTML = 
@@ -503,6 +583,21 @@
         }
     }
 
+    function resetCalculator() {
+        ['p1', 'p2', 'p3', 'p4', 'p5'].forEach(id => {
+            const input = document.getElementById(id);
+            const range = document.getElementById(id + '_range');
+            input.value = "";
+            range.value = 0;
+            input.classList.remove('invalid-input');
+            const err = document.getElementById(id + '_err');
+            if(err) err.style.display = 'none';
+        });
+        document.getElementById('cushionInput').value = "";
+        localStorage.removeItem('9702_saved_prediction');
+        calculateMarks();
+    }
+
     function saveToLocalStorage() {
         const dataToSave = {
             p1: document.getElementById('p1').value,
@@ -515,27 +610,13 @@
             cushion: document.getElementById('cushionInput').value
         };
         localStorage.setItem('9702_saved_prediction', JSON.stringify(dataToSave));
-        alert('Prediction scores successfully saved to mobile local storage!');
+        alert('Prediction saved to local storage!');
     }
 
-    function loadFromLocalStorage() {
-        const saved = localStorage.getItem('9702_saved_prediction');
-        if (saved) {
-            const data = JSON.parse(saved);
-            document.getElementById('p1').value = data.p1 || "";
-            document.getElementById('p2').value = data.p2 || "";
-            document.getElementById('p3').value = data.p3 || "";
-            document.getElementById('p4').value = data.p4 || "";
-            document.getElementById('p5').value = data.p5 || "";
-            if (data.series) document.getElementById('seriesSelect').value = data.series;
-            if (data.targetGrade) document.getElementById('targetGradeSelect').value = data.targetGrade;
-            if (data.cushion) document.getElementById('cushionInput').value = data.cushion;
-
-            ['p1', 'p2', 'p3', 'p4', 'p5'].forEach(id => syncRange(id));
-        }
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
     }
 
-    loadFromLocalStorage();
     calculateMarks();
 </script>
 
