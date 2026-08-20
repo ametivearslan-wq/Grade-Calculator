@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Level Physics (9702) Grade Threshold Calculator</title>
+    <title>A Level Physics (9702) Threshold & Forecast Calculator</title>
     <style>
         :root {
             --bg-color: #f4f7f9;
@@ -26,7 +26,7 @@
 
         .container {
             width: 100%;
-            max-width: 800px;
+            max-width: 900px;
             background: var(--card-bg);
             padding: 28px;
             border-radius: 12px;
@@ -36,27 +36,75 @@
         h1 {
             color: var(--primary);
             font-size: 1.5rem;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
         p.subtitle {
             color: #6b7280;
             font-size: 0.9rem;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
+        }
+
+        .mode-toggle {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--border);
+            background: #f8fafc;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text);
+            text-align: center;
+        }
+
+        .mode-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .control-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+        }
+
+        select, input[type="number"] {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-size: 0.9rem;
+            box-sizing: border-box;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px;
             margin-bottom: 24px;
         }
 
         .input-card {
             background: #f8fafc;
             border: 1px solid var(--border);
-            padding: 16px;
+            padding: 14px;
             border-radius: 8px;
+            position: relative;
         }
 
         .input-card label {
@@ -66,24 +114,21 @@
             margin-bottom: 6px;
         }
 
-        .input-card input {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 1rem;
-            box-sizing: border-box;
-        }
-
-        .input-card input:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
         .note {
             font-size: 0.75rem;
             color: #6b7280;
             margin-top: 4px;
+        }
+
+        .comp-badge {
+            display: inline-block;
+            margin-top: 6px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            background: #e2e8f0;
+            color: #334155;
         }
 
         .results-panel {
@@ -91,24 +136,33 @@
             border-left: 4px solid var(--accent);
             padding: 20px;
             border-radius: 0 8px 8px 0;
-            margin-top: 20px;
+        }
+
+        .score-container {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
         }
 
         .total-score {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: var(--primary);
         }
 
         .grade-badge {
-            display: inline-block;
             background: var(--primary);
             color: white;
-            padding: 4px 12px;
+            padding: 4px 14px;
             border-radius: 20px;
             font-weight: 600;
-            font-size: 0.9rem;
-            margin-left: 10px;
+            font-size: 1rem;
+        }
+
+        .cushion-info {
+            font-size: 0.85rem;
+            color: #1e40af;
+            margin-top: 6px;
         }
 
         .threshold-table {
@@ -128,61 +182,108 @@
             background: #f1f5f9;
         }
 
-        select {
-            padding: 8px 12px;
-            border-radius: 6px;
-            border: 1px solid var(--border);
-            font-size: 0.9rem;
-            margin-bottom: 16px;
-            width: 100%;
+        .hidden {
+            display: none !important;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>A Level Physics (9702) Calculator</h1>
-    <p class="subtitle">Component weighting and estimated grade threshold analyzer.</p>
+    <h1>A Level Physics (9702) Grade Calculator</h1>
+    <p class="subtitle">Complete weighting, component analysis, and multi-series threshold dataset.</p>
 
-    <label for="seriesSelect"><strong>Select Difficulty / Historic Baseline:</strong></label>
-    <select id="seriesSelect" onchange="calculateMarks()">
-        <option value="moderate">Standard / Moderate Series (e.g., A* ~ 198 / 260)</option>
-        <option value="strict">Strict / High Boundary Series (e.g., A* ~ 210 / 260)</option>
-        <option value="lenient">High Difficulty / Low Boundary Series (e.g., A* ~ 185 / 260)</option>
-    </select>
+    <div class="mode-toggle">
+        <div class="mode-btn active" id="btnFull" onclick="switchMode('full')">Full A-Level (P1-P5)</div>
+        <div class="mode-btn" id="btnCarry" onclick="switchMode('carry')">AS Carry-Forward + A2</div>
+    </div>
 
-    <div class="grid">
+    <div class="controls-grid">
+        <div class="control-group">
+            <label for="seriesSelect">Exam Series / Dataset Baseline:</label>
+            <select id="seriesSelect" onchange="calculateMarks()">
+                <optgroup label="Historic Boundaries (260 Max)">
+                    <option value="m24">June 2024 (Standard - A* 198)</option>
+                    <option value="s23">June 2023 (Strict - A* 208)</option>
+                    <option value="w23">Nov 2023 (Standard - A* 195)</option>
+                    <option value="s22">June 2022 (Moderate - A* 188)</option>
+                    <option value="w21">Nov 2021 (Lenient - A* 181)</option>
+                </optgroup>
+                <optgroup label="Theoretical Boundaries">
+                    <option value="strict">Strict Tier (A* ~ 210)</option>
+                    <option value="moderate">Moderate Tier (A* ~ 198)</option>
+                    <option value="lenient">Lenient Tier (A* ~ 185)</option>
+                </optgroup>
+            </select>
+        </div>
+        <div class="control-group">
+            <label for="cushionInput">Safety Buffer (+ Marks):</label>
+            <input type="number" id="cushionInput" min="0" max="20" value="0" oninput="calculateMarks()">
+        </div>
+    </div>
+
+    <!-- Mode 1: Full A Level Inputs -->
+    <div id="fullInputs" class="grid">
         <div class="input-card">
             <label for="p1">Paper 1 (MCQ)</label>
             <input type="number" id="p1" min="0" max="40" value="30" oninput="calculateMarks()">
-            <div class="note">Max raw: 40 | Weight: 1.0</div>
+            <div class="note">Max: 40 | Weight: 1.0</div>
+            <div class="comp-badge" id="b1">-</div>
         </div>
         <div class="input-card">
             <label for="p2">Paper 2 (AS Structured)</label>
             <input type="number" id="p2" min="0" max="60" value="42" oninput="calculateMarks()">
-            <div class="note">Max raw: 60 | Weight: 1.0</div>
+            <div class="note">Max: 60 | Weight: 1.0</div>
+            <div class="comp-badge" id="b2">-</div>
         </div>
         <div class="input-card">
             <label for="p3">Paper 3 (Practical)</label>
             <input type="number" id="p3" min="0" max="40" value="30" oninput="calculateMarks()">
-            <div class="note">Max raw: 40 | Weight: 0.75</div>
+            <div class="note">Max: 40 | Weight: 0.75</div>
+            <div class="comp-badge" id="b3">-</div>
         </div>
         <div class="input-card">
             <label for="p4">Paper 4 (A2 Structured)</label>
             <input type="number" id="p4" min="0" max="100" value="70" oninput="calculateMarks()">
-            <div class="note">Max raw: 100 | Weight: 1.0</div>
+            <div class="note">Max: 100 | Weight: 1.0</div>
+            <div class="comp-badge" id="b4">-</div>
         </div>
         <div class="input-card">
-            <label for="p5">Paper 5 (Planning & Eval)</label>
+            <label for="p5">Paper 5 (Planning/Eval)</label>
             <input type="number" id="p5" min="0" max="30" value="22" oninput="calculateMarks()">
+            <div class="note">Max: 30 | Weight: 1.0</div>
+            <div class="comp-badge" id="b5">-</div>
+        </div>
+    </div>
+
+    <!-- Mode 2: AS Carry Forward Inputs -->
+    <div id="carryInputs" class="grid hidden">
+        <div class="input-card">
+            <label for="asScore">Carried AS Score</label>
+            <input type="number" id="asScore" min="0" max="130" value="95" oninput="calculateMarks()">
+            <div class="note">Max weighted: 130</div>
+        </div>
+        <div class="input-card">
+            <label for="p4_c">Paper 4 (A2 Structured)</label>
+            <input type="number" id="p4_c" min="0" max="100" value="70" oninput="calculateMarks()">
+            <div class="note">Max raw: 100 | Weight: 1.0</div>
+            <div class="comp-badge" id="b4_c">-</div>
+        </div>
+        <div class="input-card">
+            <label for="p5_c">Paper 5 (Planning/Eval)</label>
+            <input type="number" id="p5_c" min="0" max="30" value="22" oninput="calculateMarks()">
             <div class="note">Max raw: 30 | Weight: 1.0</div>
+            <div class="comp-badge" id="b5_c">-</div>
         </div>
     </div>
 
     <div class="results-panel">
-        <div>Weighted Total Score:</div>
-        <span class="total-score" id="totalScore">0</span><span> / 260</span>
-        <span class="grade-badge" id="gradeBadge">Grade: -</span>
+        <div>Weighted Total Mark:</div>
+        <div class="score-container">
+            <span class="total-score" id="totalScore">0</span><span> / 260</span>
+            <span class="grade-badge" id="gradeBadge">Grade: -</span>
+        </div>
+        <div class="cushion-info" id="cushionText"></div>
 
         <table class="threshold-table">
             <thead>
@@ -198,7 +299,7 @@
             </thead>
             <tbody>
                 <tr id="thresholdRow">
-                    <td>Boundary</td>
+                    <td>Boundary (with buffer)</td>
                     <td id="t-Astar">-</td>
                     <td id="t-A">-</td>
                     <td id="t-B">-</td>
@@ -212,42 +313,108 @@
 </div>
 
 <script>
-    const thresholdsData = {
-        strict:   { Astar: 210, A: 185, B: 155, C: 128, D: 102, E: 76 },
-        moderate: { Astar: 198, A: 172, B: 142, C: 116, D: 91,  E: 66 },
-        lenient:  { Astar: 185, A: 158, B: 130, C: 105, D: 81,  E: 58 }
+    let currentMode = 'full';
+
+    // Expanded dataset with historic series and theoretical tiers
+    const dataset = {
+        m24:      { Astar: 198, A: 171, B: 141, C: 115, D: 90,  E: 65,  comp: {p1: 27, p2: 38, p3: 28, p4: 64, p5: 21} },
+        s23:      { Astar: 208, A: 182, B: 151, C: 124, D: 98,  E: 72,  comp: {p1: 29, p2: 41, p3: 29, p4: 69, p5: 23} },
+        w23:      { Astar: 195, A: 168, B: 138, C: 112, D: 87,  E: 62,  comp: {p1: 26, p2: 37, p3: 27, p4: 62, p5: 20} },
+        s22:      { Astar: 188, A: 160, B: 131, C: 105, D: 80,  E: 55,  comp: {p1: 25, p2: 35, p3: 26, p4: 58, p5: 19} },
+        w21:      { Astar: 181, A: 154, B: 125, C: 99,  D: 74,  E: 49,  comp: {p1: 24, p2: 33, p3: 25, p4: 55, p5: 18} },
+        strict:   { Astar: 210, A: 185, B: 155, C: 128, D: 102, E: 76,  comp: {p1: 30, p2: 43, p3: 30, p4: 71, p5: 24} },
+        moderate: { Astar: 198, A: 172, B: 142, C: 116, D: 91,  E: 66,  comp: {p1: 27, p2: 38, p3: 28, p4: 64, p5: 21} },
+        lenient:  { Astar: 185, A: 158, B: 130, C: 105, D: 81,  E: 58,  comp: {p1: 24, p2: 34, p3: 25, p4: 57, p5: 19} }
     };
 
-    function calculateMarks() {
-        const p1 = parseFloat(document.getElementById('p1').value) || 0;
-        const p2 = parseFloat(document.getElementById('p2').value) || 0;
-        const p3 = parseFloat(document.getElementById('p3').value) || 0;
-        const p4 = parseFloat(document.getElementById('p4').value) || 0;
-        const p5 = parseFloat(document.getElementById('p5').value) || 0;
+    function switchMode(mode) {
+        currentMode = mode;
+        document.getElementById('btnFull').classList.toggle('active', mode === 'full');
+        document.getElementById('btnCarry').classList.toggle('active', mode === 'carry');
+        document.getElementById('fullInputs').classList.toggle('hidden', mode !== 'full');
+        document.getElementById('carryInputs').classList.toggle('hidden', mode !== 'carry');
+        calculateMarks();
+    }
 
-        // Apply scaling factor (P3 weighted at 0.75)
-        const weightedScore = Math.round(p1 + p2 + (p3 * 0.75) + p4 + p5);
+    function updateCompBadge(elementId, score, targetA) {
+        const badge = document.getElementById(elementId);
+        if (!badge) return;
+        if (score >= targetA) {
+            badge.innerText = 'Component: A Range';
+            badge.style.background = '#dcfce7';
+            badge.style.color = '#15803d';
+        } else {
+            badge.innerText = 'Component: Below A';
+            badge.style.background = '#fef3c7';
+            badge.style.color = '#b45309';
+        }
+    }
+
+    function calculateMarks() {
+        const seriesKey = document.getElementById('seriesSelect').value;
+        const selectedData = dataset[seriesKey];
+        const cushion = parseInt(document.getElementById('cushionInput').value) || 0;
+
+        let weightedScore = 0;
+
+        if (currentMode === 'full') {
+            const p1 = parseFloat(document.getElementById('p1').value) || 0;
+            const p2 = parseFloat(document.getElementById('p2').value) || 0;
+            const p3 = parseFloat(document.getElementById('p3').value) || 0;
+            const p4 = parseFloat(document.getElementById('p4').value) || 0;
+            const p5 = parseFloat(document.getElementById('p5').value) || 0;
+
+            weightedScore = Math.round(p1 + p2 + (p3 * 0.75) + p4 + p5);
+
+            updateCompBadge('b1', p1, selectedData.comp.p1);
+            updateCompBadge('b2', p2, selectedData.comp.p2);
+            updateCompBadge('b3', p3, selectedData.comp.p3);
+            updateCompBadge('b4', p4, selectedData.comp.p4);
+            updateCompBadge('b5', p5, selectedData.comp.p5);
+        } else {
+            const as = parseFloat(document.getElementById('asScore').value) || 0;
+            const p4 = parseFloat(document.getElementById('p4_c').value) || 0;
+            const p5 = parseFloat(document.getElementById('p5_c').value) || 0;
+
+            weightedScore = Math.round(as + p4 + p5);
+
+            updateCompBadge('b4_c', p4, selectedData.comp.p4);
+            updateCompBadge('b5_c', p5, selectedData.comp.p5);
+        }
+
         document.getElementById('totalScore').innerText = weightedScore;
 
-        const selectedSeries = document.getElementById('seriesSelect').value;
-        const boundaries = thresholdsData[selectedSeries];
+        // Apply Cushion to displayed target thresholds
+        const effAstar = selectedData.Astar + cushion;
+        const effA     = selectedData.A + cushion;
+        const effB     = selectedData.B + cushion;
+        const effC     = selectedData.C + cushion;
+        const effD     = selectedData.D + cushion;
+        const effE     = selectedData.E + cushion;
 
-        document.getElementById('t-Astar').innerText = boundaries.Astar;
-        document.getElementById('t-A').innerText = boundaries.A;
-        document.getElementById('t-B').innerText = boundaries.B;
-        document.getElementById('t-C').innerText = boundaries.C;
-        document.getElementById('t-D').innerText = boundaries.D;
-        document.getElementById('t-E').innerText = boundaries.E;
+        document.getElementById('t-Astar').innerText = effAstar;
+        document.getElementById('t-A').innerText = effA;
+        document.getElementById('t-B').innerText = effB;
+        document.getElementById('t-C').innerText = effC;
+        document.getElementById('t-D').innerText = effD;
+        document.getElementById('t-E').innerText = effE;
 
         let estimatedGrade = 'U';
-        if (weightedScore >= boundaries.Astar) estimatedGrade = 'A*';
-        else if (weightedScore >= boundaries.A) estimatedGrade = 'A';
-        else if (weightedScore >= boundaries.B) estimatedGrade = 'B';
-        else if (weightedScore >= boundaries.C) estimatedGrade = 'C';
-        else if (weightedScore >= boundaries.D) estimatedGrade = 'D';
-        else if (weightedScore >= boundaries.E) estimatedGrade = 'E';
+        if (weightedScore >= effAstar) estimatedGrade = 'A*';
+        else if (weightedScore >= effA) estimatedGrade = 'A';
+        else if (weightedScore >= effB) estimatedGrade = 'B';
+        else if (weightedScore >= effC) estimatedGrade = 'C';
+        else if (weightedScore >= effD) estimatedGrade = 'D';
+        else if (weightedScore >= effE) estimatedGrade = 'E';
 
         document.getElementById('gradeBadge').innerText = 'Estimated Grade: ' + estimatedGrade;
+
+        const cushionText = document.getElementById('cushionText');
+        if (cushion > 0) {
+            cushionText.innerText = `Targets include a +${cushion} mark safety buffer above raw historical boundaries.`;
+        } else {
+            cushionText.innerText = '';
+        }
     }
 
     calculateMarks();
