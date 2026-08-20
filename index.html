@@ -21,7 +21,7 @@
             background: linear-gradient(135deg, #e0f2fe 0%, #f3e8ff 100%);
             color: var(--text-main);
             margin: 0;
-            padding: 24px 12px;
+            padding: 16px 8px;
             display: flex;
             justify-content: center;
         }
@@ -30,25 +30,26 @@
             width: 100%;
             max-width: 950px;
             background: var(--card-bg);
-            padding: 32px;
+            padding: 24px 18px;
             border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         h1 {
             color: var(--primary-dark);
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             margin: 0 0 6px 0;
         }
 
         p.subtitle {
             color: #64748b;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             margin: 0;
         }
 
@@ -56,11 +57,11 @@
             background: linear-gradient(90deg, #eff6ff 0%, #f5f3ff 100%);
             border: 1px solid #bfdbfe;
             border-radius: 12px;
-            padding: 18px;
+            padding: 16px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px;
+            margin-bottom: 20px;
         }
 
         .control-group label {
@@ -82,35 +83,25 @@
         }
 
         .section-title {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 700;
             margin: 20px 0 12px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
-
         .section-title.as { color: var(--primary); }
         .section-title.a2 { color: var(--accent-purple); }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 14px;
+            margin-bottom: 20px;
         }
 
         .input-card {
             background: #ffffff;
             border: 2px solid #e2e8f0;
-            padding: 16px;
+            padding: 14px;
             border-radius: 12px;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-
-        .input-card:focus-within {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
         }
 
         .input-card.a2-card {
@@ -125,6 +116,19 @@
             margin-bottom: 6px;
         }
 
+        .input-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin-top: 8px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
         .note {
             font-size: 0.78rem;
             color: #64748b;
@@ -132,8 +136,8 @@
         }
 
         .target-suggestion {
-            margin-top: 10px;
-            padding: 8px 10px;
+            margin-top: 8px;
+            padding: 6px 10px;
             background: #f0fdf4;
             border: 1px solid #bbf7d0;
             border-radius: 6px;
@@ -142,10 +146,33 @@
             font-weight: 600;
         }
 
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .action-btn:active { opacity: 0.8; }
+        .btn-save { background: var(--accent-teal); color: white; }
+        .btn-print { background: var(--primary); color: white; }
+
         .results-panel {
             background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
             color: white;
-            padding: 24px;
+            padding: 20px;
             border-radius: 14px;
             box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
         }
@@ -159,17 +186,17 @@
         }
 
         .total-score {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 800;
         }
 
         .target-status-badge {
             background: #ffffff;
             color: var(--primary-dark);
-            padding: 6px 16px;
+            padding: 6px 14px;
             border-radius: 20px;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
         .as-carry-info {
@@ -177,14 +204,14 @@
             padding: 10px 14px;
             border-radius: 8px;
             margin-top: 12px;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
         }
 
         .threshold-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 18px;
-            font-size: 0.88rem;
+            margin-top: 16px;
+            font-size: 0.85rem;
             background: white;
             color: var(--text-main);
             border-radius: 8px;
@@ -192,7 +219,7 @@
         }
 
         .threshold-table th, .threshold-table td {
-            padding: 10px 12px;
+            padding: 8px 10px;
             text-align: center;
             border-bottom: 1px solid #e2e8f0;
         }
@@ -201,6 +228,38 @@
             background: #f1f5f9;
             color: #334155;
             font-weight: 700;
+        }
+
+        /* Dedicated Mobile Print & PDF Export Stylesheet */
+        @media print {
+            body {
+                background: none;
+                color: #000;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+                padding: 0;
+            }
+            .btn-group, .controls-card, input[type="range"] {
+                display: none !important;
+            }
+            .input-card {
+                border: 1px solid #ccc;
+                background: #fff !important;
+                page-break-inside: avoid;
+            }
+            .results-panel {
+                background: #f8fafc !important;
+                color: #000 !important;
+                border: 2px solid #2563eb;
+                box-shadow: none;
+            }
+            .total-score { color: #1e3a8a; }
+            .target-status-badge {
+                border: 1px solid #2563eb;
+            }
         }
     </style>
 </head>
@@ -212,7 +271,7 @@
         <p class="subtitle">AS Carry-Forward Analysis & Target Score Generator</p>
     </div>
 
-    <!-- Global Controls -->
+    <!-- Controls -->
     <div class="controls-card">
         <div class="control-group">
             <label for="seriesSelect">Exam Baseline Series:</label>
@@ -250,49 +309,73 @@
         </div>
     </div>
 
-    <!-- AS Component Inputs -->
-    <div class="section-title as">📘 Step 1: Enter Obtained AS Component Marks</div>
+    <!-- AS Components -->
+    <div class="section-title as">📘 Step 1: Obtained AS Component Marks</div>
     <div class="grid">
         <div class="input-card">
-            <label for="p1">Paper 1 (MCQ)</label>
-            <input type="number" id="p1" min="0" max="40" value="28" oninput="calculateMarks()">
+            <div class="input-header">
+                <label for="p1">Paper 1 (MCQ)</label>
+                <input type="number" id="p1" min="0" max="40" value="28" style="width: 70px;" oninput="syncRange('p1')">
+            </div>
+            <input type="range" id="p1_range" min="0" max="40" value="28" oninput="syncInput('p1')">
             <div class="note">Max Raw: 40 | Weight: 1.0</div>
         </div>
+
         <div class="input-card">
-            <label for="p2">Paper 2 (AS Structured)</label>
-            <input type="number" id="p2" min="0" max="60" value="40" oninput="calculateMarks()">
+            <div class="input-header">
+                <label for="p2">Paper 2 (AS Structured)</label>
+                <input type="number" id="p2" min="0" max="60" value="40" style="width: 70px;" oninput="syncRange('p2')">
+            </div>
+            <input type="range" id="p2_range" min="0" max="60" value="40" oninput="syncInput('p2')">
             <div class="note">Max Raw: 60 | Weight: 1.0</div>
         </div>
+
         <div class="input-card">
-            <label for="p3">Paper 3 (Practical)</label>
-            <input type="number" id="p3" min="0" max="40" value="30" oninput="calculateMarks()">
+            <div class="input-header">
+                <label for="p3">Paper 3 (Practical)</label>
+                <input type="number" id="p3" min="0" max="40" value="30" style="width: 70px;" oninput="syncRange('p3')">
+            </div>
+            <input type="range" id="p3_range" min="0" max="40" value="30" oninput="syncInput('p3')">
             <div class="note">Max Raw: 40 | Weight: 0.75</div>
         </div>
     </div>
 
-    <!-- A2 Component Inputs & Suggestions -->
-    <div class="section-title a2">📙 Step 2: Enter Estimated A2 Marks or View Suggestions</div>
+    <!-- A2 Components -->
+    <div class="section-title a2">📙 Step 2: Estimated A2 Marks</div>
     <div class="grid">
         <div class="input-card a2-card">
-            <label for="p4">Paper 4 (A2 Structured)</label>
-            <input type="number" id="p4" min="0" max="100" value="65" oninput="calculateMarks()">
+            <div class="input-header">
+                <label for="p4">Paper 4 (A2 Structured)</label>
+                <input type="number" id="p4" min="0" max="100" value="65" style="width: 70px;" oninput="syncRange('p4')">
+            </div>
+            <input type="range" id="p4_range" min="0" max="100" value="65" oninput="syncInput('p4')">
             <div class="note">Max Raw: 100 | Weight: 1.0</div>
             <div class="target-suggestion" id="suggP4">Suggested: --</div>
         </div>
+
         <div class="input-card a2-card">
-            <label for="p5">Paper 5 (Planning & Eval)</label>
-            <input type="number" id="p5" min="0" max="30" value="20" oninput="calculateMarks()">
+            <div class="input-header">
+                <label for="p5">Paper 5 (Planning & Eval)</label>
+                <input type="number" id="p5" min="0" max="30" value="20" style="width: 70px;" oninput="syncRange('p5')">
+            </div>
+            <input type="range" id="p5_range" min="0" max="30" value="20" oninput="syncInput('p5')">
             <div class="note">Max Raw: 30 | Weight: 1.0</div>
             <div class="target-suggestion" id="suggP5">Suggested: --</div>
         </div>
+    </div>
+
+    <!-- Storage & Print Actions -->
+    <div class="btn-group">
+        <button class="action-btn btn-save" onclick="saveToLocalStorage()">💾 Save Prediction</button>
+        <button class="action-btn btn-print" onclick="window.print()">🖨️ Export / Print PDF</button>
     </div>
 
     <!-- Output Panel -->
     <div class="results-panel">
         <div class="score-container">
             <div>
-                <div style="font-size: 0.9rem; opacity: 0.9;">Total Weighted A-Level Score</div>
-                <span class="total-score" id="totalScore">0</span><span style="font-size: 1.2rem;"> / 260</span>
+                <div style="font-size: 0.85rem; opacity: 0.9;">Total Weighted A-Level Score</div>
+                <span class="total-score" id="totalScore">0</span><span style="font-size: 1.1rem;"> / 260</span>
             </div>
             <div class="target-status-badge" id="gradeBadge">Status: --</div>
         </div>
@@ -315,7 +398,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>Boundary Target</strong></td>
+                    <td><strong>Boundary</strong></td>
                     <td id="t-Astar">-</td>
                     <td id="t-A">-</td>
                     <td id="t-B">-</td>
@@ -340,22 +423,26 @@
         lenient:  { Astar: 185, A: 158, B: 130, C: 105, D: 81,  E: 58 }
     };
 
+    function syncInput(id) {
+        document.getElementById(id).value = document.getElementById(id + '_range').value;
+        calculateMarks();
+    }
+
+    function syncRange(id) {
+        document.getElementById(id + '_range').value = document.getElementById(id).value;
+        calculateMarks();
+    }
+
     function calculateMarks() {
-        // AS Raw Components
         const p1 = parseFloat(document.getElementById('p1').value) || 0;
         const p2 = parseFloat(document.getElementById('p2').value) || 0;
         const p3 = parseFloat(document.getElementById('p3').value) || 0;
-
-        // Calculate Carried AS Score (P1 + P2 + P3*0.75) out of 130
-        const asWeighted = Math.round(p1 + p2 + (p3 * 0.75));
-
-        // A2 Raw Components
         const p4 = parseFloat(document.getElementById('p4').value) || 0;
         const p5 = parseFloat(document.getElementById('p5').value) || 0;
 
+        const asWeighted = Math.round(p1 + p2 + (p3 * 0.75));
         const totalWeighted = Math.round(asWeighted + p4 + p5);
 
-        // Selected Dataset & Buffer
         const seriesKey = document.getElementById('seriesSelect').value;
         const boundaries = dataset[seriesKey];
         const cushion = parseInt(document.getElementById('cushionInput').value) || 0;
@@ -367,7 +454,6 @@
         const effD     = boundaries.D + cushion;
         const effE     = boundaries.E + cushion;
 
-        // Display Table Boundaries
         document.getElementById('t-Astar').innerText = effAstar;
         document.getElementById('t-A').innerText = effA;
         document.getElementById('t-B').innerText = effB;
@@ -379,11 +465,8 @@
         document.getElementById('asCarryText').innerHTML = 
             `Carried AS Score: <strong>${asWeighted} / 130</strong> (P1: ${p1}, P2: ${p2}, P3: ${p3 * 0.75} weighted)`;
 
-        // Selected Target Grade Calculation
         const targetGradeKey = document.getElementById('targetGradeSelect').value;
         const targetThreshold = boundaries[targetGradeKey] + cushion;
-
-        // Required A2 Marks (P4 + P5)
         const requiredA2Marks = targetThreshold - asWeighted;
 
         const suggP4 = document.getElementById('suggP4');
@@ -393,23 +476,18 @@
             suggP4.innerText = "Suggested P4: Achieved!";
             suggP5.innerText = "Suggested P5: Achieved!";
         } else if (requiredA2Marks > 130) {
-            suggP4.innerText = "Target unachievable from current AS";
-            suggP5.innerText = "Target unachievable from current AS";
+            suggP4.innerText = "Unachievable from current AS";
+            suggP5.innerText = "Unachievable from current AS";
         } else {
-            // Proportional distribution between Paper 4 (100) and Paper 5 (30)
             let recP4 = Math.min(100, Math.round(requiredA2Marks * (100 / 130)));
             let recP5 = Math.min(30, Math.round(requiredA2Marks * (30 / 130)));
-
-            // Adjust rounding errors if combined recommendation is slightly under
             if (recP4 + recP5 < requiredA2Marks && recP4 < 100) {
                 recP4 += (requiredA2Marks - (recP4 + recP5));
             }
-
             suggP4.innerText = `Suggested Target: ${recP4} / 100`;
             suggP5.innerText = `Suggested Target: ${recP5} / 30`;
         }
 
-        // Current Performance Status relative to Target
         const gradeBadge = document.getElementById('gradeBadge');
         if (totalWeighted >= targetThreshold) {
             gradeBadge.innerText = `On Track for ${targetGradeKey.replace('star', '*')}`;
@@ -423,6 +501,39 @@
         }
     }
 
+    function saveToLocalStorage() {
+        const dataToSave = {
+            p1: document.getElementById('p1').value,
+            p2: document.getElementById('p2').value,
+            p3: document.getElementById('p3').value,
+            p4: document.getElementById('p4').value,
+            p5: document.getElementById('p5').value,
+            series: document.getElementById('seriesSelect').value,
+            targetGrade: document.getElementById('targetGradeSelect').value,
+            cushion: document.getElementById('cushionInput').value
+        };
+        localStorage.setItem('9702_saved_prediction', JSON.stringify(dataToSave));
+        alert('Prediction scores successfully saved to mobile local storage!');
+    }
+
+    function loadFromLocalStorage() {
+        const saved = localStorage.getItem('9702_saved_prediction');
+        if (saved) {
+            const data = JSON.parse(saved);
+            document.getElementById('p1').value = data.p1 || 28;
+            document.getElementById('p2').value = data.p2 || 40;
+            document.getElementById('p3').value = data.p3 || 30;
+            document.getElementById('p4').value = data.p4 || 65;
+            document.getElementById('p5').value = data.p5 || 20;
+            if (data.series) document.getElementById('seriesSelect').value = data.series;
+            if (data.targetGrade) document.getElementById('targetGradeSelect').value = data.targetGrade;
+            if (data.cushion) document.getElementById('cushionInput').value = data.cushion;
+
+            ['p1', 'p2', 'p3', 'p4', 'p5'].forEach(id => syncRange(id));
+        }
+    }
+
+    loadFromLocalStorage();
     calculateMarks();
 </script>
 
