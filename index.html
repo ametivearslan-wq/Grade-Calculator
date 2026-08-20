@@ -230,36 +230,31 @@
             font-weight: 700;
         }
 
-        /* Dedicated Mobile Print & PDF Export Stylesheet */
+        .author-footer {
+            margin-top: 24px;
+            padding: 16px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        .author-footer strong {
+            color: var(--primary-dark);
+        }
+
         @media print {
-            body {
-                background: none;
-                color: #000;
-                padding: 0;
-            }
-            .container {
-                box-shadow: none;
-                max-width: 100%;
-                padding: 0;
-            }
-            .btn-group, .controls-card, input[type="range"] {
-                display: none !important;
-            }
-            .input-card {
-                border: 1px solid #ccc;
-                background: #fff !important;
-                page-break-inside: avoid;
-            }
-            .results-panel {
-                background: #f8fafc !important;
-                color: #000 !important;
-                border: 2px solid #2563eb;
-                box-shadow: none;
-            }
+            body { background: none; color: #000; padding: 0; }
+            .container { box-shadow: none; max-width: 100%; padding: 0; }
+            .btn-group, .controls-card, input[type="range"] { display: none !important; }
+            .input-card { border: 1px solid #ccc; background: #fff !important; page-break-inside: avoid; }
+            .results-panel { background: #f8fafc !important; color: #000 !important; border: 2px solid #2563eb; box-shadow: none; }
             .total-score { color: #1e3a8a; }
-            .target-status-badge {
-                border: 1px solid #2563eb;
-            }
+            .target-status-badge { border: 1px solid #2563eb; }
+            .author-footer { border-top: 1px solid #ccc; background: none; margin-top: 16px; }
         }
     </style>
 </head>
@@ -305,7 +300,7 @@
 
         <div class="control-group">
             <label for="cushionInput">Safety Buffer (+ Marks):</label>
-            <input type="number" id="cushionInput" min="0" max="20" value="0" oninput="calculateMarks()">
+            <input type="number" id="cushionInput" min="0" max="20" placeholder="0" oninput="calculateMarks()">
         </div>
     </div>
 
@@ -315,27 +310,27 @@
         <div class="input-card">
             <div class="input-header">
                 <label for="p1">Paper 1 (MCQ)</label>
-                <input type="number" id="p1" min="0" max="40" value="28" style="width: 70px;" oninput="syncRange('p1')">
+                <input type="number" id="p1" min="0" max="40" placeholder="0" style="width: 70px;" oninput="syncRange('p1')">
             </div>
-            <input type="range" id="p1_range" min="0" max="40" value="28" oninput="syncInput('p1')">
+            <input type="range" id="p1_range" min="0" max="40" value="0" oninput="syncInput('p1')">
             <div class="note">Max Raw: 40 | Weight: 1.0</div>
         </div>
 
         <div class="input-card">
             <div class="input-header">
                 <label for="p2">Paper 2 (AS Structured)</label>
-                <input type="number" id="p2" min="0" max="60" value="40" style="width: 70px;" oninput="syncRange('p2')">
+                <input type="number" id="p2" min="0" max="60" placeholder="0" style="width: 70px;" oninput="syncRange('p2')">
             </div>
-            <input type="range" id="p2_range" min="0" max="60" value="40" oninput="syncInput('p2')">
+            <input type="range" id="p2_range" min="0" max="60" value="0" oninput="syncInput('p2')">
             <div class="note">Max Raw: 60 | Weight: 1.0</div>
         </div>
 
         <div class="input-card">
             <div class="input-header">
                 <label for="p3">Paper 3 (Practical)</label>
-                <input type="number" id="p3" min="0" max="40" value="30" style="width: 70px;" oninput="syncRange('p3')">
+                <input type="number" id="p3" min="0" max="40" placeholder="0" style="width: 70px;" oninput="syncRange('p3')">
             </div>
-            <input type="range" id="p3_range" min="0" max="40" value="30" oninput="syncInput('p3')">
+            <input type="range" id="p3_range" min="0" max="40" value="0" oninput="syncInput('p3')">
             <div class="note">Max Raw: 40 | Weight: 0.75</div>
         </div>
     </div>
@@ -346,9 +341,9 @@
         <div class="input-card a2-card">
             <div class="input-header">
                 <label for="p4">Paper 4 (A2 Structured)</label>
-                <input type="number" id="p4" min="0" max="100" value="65" style="width: 70px;" oninput="syncRange('p4')">
+                <input type="number" id="p4" min="0" max="100" placeholder="0" style="width: 70px;" oninput="syncRange('p4')">
             </div>
-            <input type="range" id="p4_range" min="0" max="100" value="65" oninput="syncInput('p4')">
+            <input type="range" id="p4_range" min="0" max="100" value="0" oninput="syncInput('p4')">
             <div class="note">Max Raw: 100 | Weight: 1.0</div>
             <div class="target-suggestion" id="suggP4">Suggested: --</div>
         </div>
@@ -356,9 +351,9 @@
         <div class="input-card a2-card">
             <div class="input-header">
                 <label for="p5">Paper 5 (Planning & Eval)</label>
-                <input type="number" id="p5" min="0" max="30" value="20" style="width: 70px;" oninput="syncRange('p5')">
+                <input type="number" id="p5" min="0" max="30" placeholder="0" style="width: 70px;" oninput="syncRange('p5')">
             </div>
-            <input type="range" id="p5_range" min="0" max="30" value="20" oninput="syncInput('p5')">
+            <input type="range" id="p5_range" min="0" max="30" value="0" oninput="syncInput('p5')">
             <div class="note">Max Raw: 30 | Weight: 1.0</div>
             <div class="target-suggestion" id="suggP5">Suggested: --</div>
         </div>
@@ -409,6 +404,12 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Author & Instructor Note -->
+    <div class="author-footer">
+        Designed & Developed by <strong>Mr. Arslan</strong> | A Level Physics Department<br>
+        <em>Calculations follow Cambridge Assessment International Education (CAIE) official syllabus weighting factors (Paper 3 scaled to 0.75 multiplier).</em>
+    </div>
 </div>
 
 <script>
@@ -429,7 +430,8 @@
     }
 
     function syncRange(id) {
-        document.getElementById(id + '_range').value = document.getElementById(id).value;
+        const val = document.getElementById(id).value;
+        document.getElementById(id + '_range').value = val === "" ? 0 : val;
         calculateMarks();
     }
 
@@ -520,11 +522,11 @@
         const saved = localStorage.getItem('9702_saved_prediction');
         if (saved) {
             const data = JSON.parse(saved);
-            document.getElementById('p1').value = data.p1 || 28;
-            document.getElementById('p2').value = data.p2 || 40;
-            document.getElementById('p3').value = data.p3 || 30;
-            document.getElementById('p4').value = data.p4 || 65;
-            document.getElementById('p5').value = data.p5 || 20;
+            document.getElementById('p1').value = data.p1 || "";
+            document.getElementById('p2').value = data.p2 || "";
+            document.getElementById('p3').value = data.p3 || "";
+            document.getElementById('p4').value = data.p4 || "";
+            document.getElementById('p5').value = data.p5 || "";
             if (data.series) document.getElementById('seriesSelect').value = data.series;
             if (data.targetGrade) document.getElementById('targetGradeSelect').value = data.targetGrade;
             if (data.cushion) document.getElementById('cushionInput').value = data.cushion;
