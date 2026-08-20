@@ -18,7 +18,13 @@
             --border: #cbd5e1;
             --card-border: #e2e8f0;
             --control-bg: linear-gradient(90deg, #eff6ff 0%, #f5f3ff 100%);
-            --table-header: #f1f5f9;
+            --table-header-bg: #f1f5f9;
+            --table-header-text: #334155;
+            --table-body-bg: #ffffff;
+            --table-body-text: #1e293b;
+            --sugg-bg: #f0fdf4;
+            --sugg-border: #bbf7d0;
+            --sugg-text: #15803d;
             --footer-bg: #f8fafc;
         }
 
@@ -34,7 +40,13 @@
             --border: #475569;
             --card-border: #334155;
             --control-bg: #0f172a;
-            --table-header: #334155;
+            --table-header-bg: #334155;
+            --table-header-text: #f8fafc;
+            --table-body-bg: #1e293b;
+            --table-body-text: #f8fafc;
+            --sugg-bg: #064e3b;
+            --sugg-border: #047857;
+            --sugg-text: #a7f3d0;
             --footer-bg: #0f172a;
         }
 
@@ -125,11 +137,15 @@
             color: var(--text-main);
         }
 
-        /* Validation Style for Exceeded Limits */
         input.invalid-input {
             border: 2px solid var(--accent-red) !important;
             background-color: #fef2f2 !important;
             color: #991b1b !important;
+        }
+
+        body.dark-mode input.invalid-input {
+            background-color: #450a0a !important;
+            color: #fca5a5 !important;
         }
 
         .error-msg {
@@ -191,18 +207,12 @@
         .target-suggestion {
             margin-top: 8px;
             padding: 6px 10px;
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
+            background: var(--sugg-bg);
+            border: 1px solid var(--sugg-border);
             border-radius: 6px;
             font-size: 0.82rem;
-            color: #15803d;
+            color: var(--sugg-text);
             font-weight: 600;
-        }
-
-        body.dark-mode .target-suggestion {
-            background: #064e3b;
-            border-color: #047857;
-            color: #a7f3d0;
         }
 
         .btn-group {
@@ -272,22 +282,26 @@
             border-collapse: collapse;
             margin-top: 16px;
             font-size: 0.85rem;
-            background: white;
-            color: #1e293b;
             border-radius: 8px;
             overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .threshold-table th, .threshold-table td {
-            padding: 8px 10px;
+            padding: 10px 12px;
             text-align: center;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid var(--border);
         }
 
         .threshold-table th {
-            background: var(--table-header);
-            color: #334155;
+            background-color: var(--table-header-bg);
+            color: var(--table-header-text);
             font-weight: 700;
+        }
+
+        .threshold-table td {
+            background-color: var(--table-body-bg);
+            color: var(--table-body-text);
         }
 
         .author-footer {
@@ -302,8 +316,9 @@
             line-height: 1.5;
         }
 
-        .author-footer strong {
-            color: var(--primary-dark);
+        .author-name-red {
+            color: #ef4444;
+            font-weight: 800;
         }
 
         @media print {
@@ -478,7 +493,7 @@
 
     <!-- Author & Instructor Note -->
     <div class="author-footer">
-        Designed & Developed by <strong>Mr. Arslan</strong> | A Level Physics Department<br>
+        Designed & Developed by <span class="author-name-red">Mr. Arslan</span> | A Level Physics Department<br>
         <em>Calculations follow Cambridge Assessment International Education (CAIE) official syllabus weighting factors (Paper 3 scaled to 0.75 multiplier).</em>
     </div>
 </div>
