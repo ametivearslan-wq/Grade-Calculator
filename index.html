@@ -3,287 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Level Physics (9702) Threshold & Forecast Calculator</title>
+    <title>A Level Physics (9702) Grade & Target Calculator</title>
     <style>
         :root {
-            --bg-color: #f4f7f9;
+            --bg-color: #f0f4f8;
             --card-bg: #ffffff;
-            --primary: #1e3a8a;
-            --accent: #2563eb;
-            --text: #1f2937;
-            --border: #e5e7eb;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --accent-teal: #0d9488;
+            --accent-purple: #7c3aed;
+            --text-main: #1e293b;
+            --border: #cbd5e1;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text);
+            background: linear-gradient(135deg, #e0f2fe 0%, #f3e8ff 100%);
+            color: var(--text-main);
             margin: 0;
-            padding: 20px;
+            padding: 24px 12px;
             display: flex;
             justify-content: center;
         }
 
         .container {
             width: 100%;
-            max-width: 900px;
+            max-width: 950px;
             background: var(--card-bg);
-            padding: 28px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
         }
 
         h1 {
-            color: var(--primary);
-            font-size: 1.5rem;
-            margin-bottom: 4px;
+            color: var(--primary-dark);
+            font-size: 1.8rem;
+            margin: 0 0 6px 0;
         }
 
         p.subtitle {
-            color: #6b7280;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
+            color: #64748b;
+            font-size: 0.95rem;
+            margin: 0;
         }
 
-        .mode-toggle {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .mode-btn {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid var(--border);
-            background: #f8fafc;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--text);
-            text-align: center;
-        }
-
-        .mode-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .controls-grid {
+        .controls-card {
+            background: linear-gradient(90deg, #eff6ff 0%, #f5f3ff 100%);
+            border: 1px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 18px;
             display: grid;
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 16px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .control-group label {
             display: block;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.85rem;
+            color: #334155;
             margin-bottom: 6px;
         }
 
         select, input[type="number"] {
             width: 100%;
-            padding: 8px 12px;
-            border-radius: 6px;
+            padding: 10px 12px;
+            border-radius: 8px;
             border: 1px solid var(--border);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             box-sizing: border-box;
+            background-color: #fff;
         }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 20px 0 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title.as { color: var(--primary); }
+        .section-title.a2 { color: var(--accent-purple); }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 14px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
             margin-bottom: 24px;
         }
 
         .input-card {
-            background: #f8fafc;
-            border: 1px solid var(--border);
-            padding: 14px;
-            border-radius: 8px;
-            position: relative;
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            padding: 16px;
+            border-radius: 12px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .input-card:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .input-card.a2-card {
+            background: #faf5ff;
+            border-color: #e9d5ff;
         }
 
         .input-card label {
             display: block;
-            font-weight: 600;
-            font-size: 0.85rem;
+            font-weight: 700;
+            font-size: 0.9rem;
             margin-bottom: 6px;
         }
 
         .note {
-            font-size: 0.75rem;
-            color: #6b7280;
+            font-size: 0.78rem;
+            color: #64748b;
             margin-top: 4px;
         }
 
-        .comp-badge {
-            display: inline-block;
-            margin-top: 6px;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            background: #e2e8f0;
-            color: #334155;
+        .target-suggestion {
+            margin-top: 10px;
+            padding: 8px 10px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            color: #15803d;
+            font-weight: 600;
         }
 
         .results-panel {
-            background: #eff6ff;
-            border-left: 4px solid var(--accent);
-            padding: 20px;
-            border-radius: 0 8px 8px 0;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 14px;
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
         }
 
         .score-container {
             display: flex;
             align-items: baseline;
+            justify-content: space-between;
+            flex-wrap: wrap;
             gap: 12px;
         }
 
         .total-score {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--primary);
+            font-size: 2.5rem;
+            font-weight: 800;
         }
 
-        .grade-badge {
-            background: var(--primary);
-            color: white;
-            padding: 4px 14px;
+        .target-status-badge {
+            background: #ffffff;
+            color: var(--primary-dark);
+            padding: 6px 16px;
             border-radius: 20px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1rem;
         }
 
-        .cushion-info {
-            font-size: 0.85rem;
-            color: #1e40af;
-            margin-top: 6px;
+        .as-carry-info {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-size: 0.9rem;
         }
 
         .threshold-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 16px;
-            font-size: 0.85rem;
+            margin-top: 18px;
+            font-size: 0.88rem;
+            background: white;
+            color: var(--text-main);
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         .threshold-table th, .threshold-table td {
-            border: 1px solid var(--border);
-            padding: 8px 12px;
+            padding: 10px 12px;
             text-align: center;
+            border-bottom: 1px solid #e2e8f0;
         }
 
         .threshold-table th {
             background: #f1f5f9;
-        }
-
-        .hidden {
-            display: none !important;
+            color: #334155;
+            font-weight: 700;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>A Level Physics (9702) Grade Calculator</h1>
-    <p class="subtitle">Complete weighting, component analysis, and multi-series threshold dataset.</p>
-
-    <div class="mode-toggle">
-        <div class="mode-btn active" id="btnFull" onclick="switchMode('full')">Full A-Level (P1-P5)</div>
-        <div class="mode-btn" id="btnCarry" onclick="switchMode('carry')">AS Carry-Forward + A2</div>
+    <div class="header">
+        <h1>A Level Physics (9702) Grade Calculator</h1>
+        <p class="subtitle">AS Carry-Forward Analysis & Target Score Generator</p>
     </div>
 
-    <div class="controls-grid">
+    <!-- Global Controls -->
+    <div class="controls-card">
         <div class="control-group">
-            <label for="seriesSelect">Exam Series / Dataset Baseline:</label>
+            <label for="seriesSelect">Exam Baseline Series:</label>
             <select id="seriesSelect" onchange="calculateMarks()">
-                <optgroup label="Historic Boundaries (260 Max)">
+                <optgroup label="Historic Series">
                     <option value="m24">June 2024 (Standard - A* 198)</option>
                     <option value="s23">June 2023 (Strict - A* 208)</option>
                     <option value="w23">Nov 2023 (Standard - A* 195)</option>
                     <option value="s22">June 2022 (Moderate - A* 188)</option>
                     <option value="w21">Nov 2021 (Lenient - A* 181)</option>
                 </optgroup>
-                <optgroup label="Theoretical Boundaries">
+                <optgroup label="Theoretical Difficulty Tiers">
                     <option value="strict">Strict Tier (A* ~ 210)</option>
-                    <option value="moderate">Moderate Tier (A* ~ 198)</option>
+                    <option value="moderate" selected>Moderate Tier (A* ~ 198)</option>
                     <option value="lenient">Lenient Tier (A* ~ 185)</option>
                 </optgroup>
             </select>
         </div>
+
+        <div class="control-group">
+            <label for="targetGradeSelect">Target A-Level Grade:</label>
+            <select id="targetGradeSelect" onchange="calculateMarks()">
+                <option value="Astar">Grade A*</option>
+                <option value="A" selected>Grade A</option>
+                <option value="B">Grade B</option>
+                <option value="C">Grade C</option>
+                <option value="D">Grade D</option>
+                <option value="E">Grade E</option>
+            </select>
+        </div>
+
         <div class="control-group">
             <label for="cushionInput">Safety Buffer (+ Marks):</label>
             <input type="number" id="cushionInput" min="0" max="20" value="0" oninput="calculateMarks()">
         </div>
     </div>
 
-    <!-- Mode 1: Full A Level Inputs -->
-    <div id="fullInputs" class="grid">
+    <!-- AS Component Inputs -->
+    <div class="section-title as">📘 Step 1: Enter Obtained AS Component Marks</div>
+    <div class="grid">
         <div class="input-card">
             <label for="p1">Paper 1 (MCQ)</label>
-            <input type="number" id="p1" min="0" max="40" value="30" oninput="calculateMarks()">
-            <div class="note">Max: 40 | Weight: 1.0</div>
-            <div class="comp-badge" id="b1">-</div>
+            <input type="number" id="p1" min="0" max="40" value="28" oninput="calculateMarks()">
+            <div class="note">Max Raw: 40 | Weight: 1.0</div>
         </div>
         <div class="input-card">
             <label for="p2">Paper 2 (AS Structured)</label>
-            <input type="number" id="p2" min="0" max="60" value="42" oninput="calculateMarks()">
-            <div class="note">Max: 60 | Weight: 1.0</div>
-            <div class="comp-badge" id="b2">-</div>
+            <input type="number" id="p2" min="0" max="60" value="40" oninput="calculateMarks()">
+            <div class="note">Max Raw: 60 | Weight: 1.0</div>
         </div>
         <div class="input-card">
             <label for="p3">Paper 3 (Practical)</label>
             <input type="number" id="p3" min="0" max="40" value="30" oninput="calculateMarks()">
-            <div class="note">Max: 40 | Weight: 0.75</div>
-            <div class="comp-badge" id="b3">-</div>
+            <div class="note">Max Raw: 40 | Weight: 0.75</div>
         </div>
-        <div class="input-card">
+    </div>
+
+    <!-- A2 Component Inputs & Suggestions -->
+    <div class="section-title a2">📙 Step 2: Enter Estimated A2 Marks or View Suggestions</div>
+    <div class="grid">
+        <div class="input-card a2-card">
             <label for="p4">Paper 4 (A2 Structured)</label>
-            <input type="number" id="p4" min="0" max="100" value="70" oninput="calculateMarks()">
-            <div class="note">Max: 100 | Weight: 1.0</div>
-            <div class="comp-badge" id="b4">-</div>
+            <input type="number" id="p4" min="0" max="100" value="65" oninput="calculateMarks()">
+            <div class="note">Max Raw: 100 | Weight: 1.0</div>
+            <div class="target-suggestion" id="suggP4">Suggested: --</div>
         </div>
-        <div class="input-card">
-            <label for="p5">Paper 5 (Planning/Eval)</label>
-            <input type="number" id="p5" min="0" max="30" value="22" oninput="calculateMarks()">
-            <div class="note">Max: 30 | Weight: 1.0</div>
-            <div class="comp-badge" id="b5">-</div>
-        </div>
-    </div>
-
-    <!-- Mode 2: AS Carry Forward Inputs -->
-    <div id="carryInputs" class="grid hidden">
-        <div class="input-card">
-            <label for="asScore">Carried AS Score</label>
-            <input type="number" id="asScore" min="0" max="130" value="95" oninput="calculateMarks()">
-            <div class="note">Max weighted: 130</div>
-        </div>
-        <div class="input-card">
-            <label for="p4_c">Paper 4 (A2 Structured)</label>
-            <input type="number" id="p4_c" min="0" max="100" value="70" oninput="calculateMarks()">
-            <div class="note">Max raw: 100 | Weight: 1.0</div>
-            <div class="comp-badge" id="b4_c">-</div>
-        </div>
-        <div class="input-card">
-            <label for="p5_c">Paper 5 (Planning/Eval)</label>
-            <input type="number" id="p5_c" min="0" max="30" value="22" oninput="calculateMarks()">
-            <div class="note">Max raw: 30 | Weight: 1.0</div>
-            <div class="comp-badge" id="b5_c">-</div>
+        <div class="input-card a2-card">
+            <label for="p5">Paper 5 (Planning & Eval)</label>
+            <input type="number" id="p5" min="0" max="30" value="20" oninput="calculateMarks()">
+            <div class="note">Max Raw: 30 | Weight: 1.0</div>
+            <div class="target-suggestion" id="suggP5">Suggested: --</div>
         </div>
     </div>
 
+    <!-- Output Panel -->
     <div class="results-panel">
-        <div>Weighted Total Mark:</div>
         <div class="score-container">
-            <span class="total-score" id="totalScore">0</span><span> / 260</span>
-            <span class="grade-badge" id="gradeBadge">Grade: -</span>
+            <div>
+                <div style="font-size: 0.9rem; opacity: 0.9;">Total Weighted A-Level Score</div>
+                <span class="total-score" id="totalScore">0</span><span style="font-size: 1.2rem;"> / 260</span>
+            </div>
+            <div class="target-status-badge" id="gradeBadge">Status: --</div>
         </div>
-        <div class="cushion-info" id="cushionText"></div>
+
+        <div class="as-carry-info" id="asCarryText">
+            Carried AS Contribution: <strong>0 / 130</strong>
+        </div>
 
         <table class="threshold-table">
             <thead>
@@ -298,8 +314,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr id="thresholdRow">
-                    <td>Boundary (with buffer)</td>
+                <tr>
+                    <td><strong>Boundary Target</strong></td>
                     <td id="t-Astar">-</td>
                     <td id="t-A">-</td>
                     <td id="t-B">-</td>
@@ -313,85 +329,45 @@
 </div>
 
 <script>
-    let currentMode = 'full';
-
-    // Expanded dataset with historic series and theoretical tiers
     const dataset = {
-        m24:      { Astar: 198, A: 171, B: 141, C: 115, D: 90,  E: 65,  comp: {p1: 27, p2: 38, p3: 28, p4: 64, p5: 21} },
-        s23:      { Astar: 208, A: 182, B: 151, C: 124, D: 98,  E: 72,  comp: {p1: 29, p2: 41, p3: 29, p4: 69, p5: 23} },
-        w23:      { Astar: 195, A: 168, B: 138, C: 112, D: 87,  E: 62,  comp: {p1: 26, p2: 37, p3: 27, p4: 62, p5: 20} },
-        s22:      { Astar: 188, A: 160, B: 131, C: 105, D: 80,  E: 55,  comp: {p1: 25, p2: 35, p3: 26, p4: 58, p5: 19} },
-        w21:      { Astar: 181, A: 154, B: 125, C: 99,  D: 74,  E: 49,  comp: {p1: 24, p2: 33, p3: 25, p4: 55, p5: 18} },
-        strict:   { Astar: 210, A: 185, B: 155, C: 128, D: 102, E: 76,  comp: {p1: 30, p2: 43, p3: 30, p4: 71, p5: 24} },
-        moderate: { Astar: 198, A: 172, B: 142, C: 116, D: 91,  E: 66,  comp: {p1: 27, p2: 38, p3: 28, p4: 64, p5: 21} },
-        lenient:  { Astar: 185, A: 158, B: 130, C: 105, D: 81,  E: 58,  comp: {p1: 24, p2: 34, p3: 25, p4: 57, p5: 19} }
+        m24:      { Astar: 198, A: 171, B: 141, C: 115, D: 90,  E: 65 },
+        s23:      { Astar: 208, A: 182, B: 151, C: 124, D: 98,  E: 72 },
+        w23:      { Astar: 195, A: 168, B: 138, C: 112, D: 87,  E: 62 },
+        s22:      { Astar: 188, A: 160, B: 131, C: 105, D: 80,  E: 55 },
+        w21:      { Astar: 181, A: 154, B: 125, C: 99,  D: 74,  E: 49 },
+        strict:   { Astar: 210, A: 185, B: 155, C: 128, D: 102, E: 76 },
+        moderate: { Astar: 198, A: 172, B: 142, C: 116, D: 91,  E: 66 },
+        lenient:  { Astar: 185, A: 158, B: 130, C: 105, D: 81,  E: 58 }
     };
 
-    function switchMode(mode) {
-        currentMode = mode;
-        document.getElementById('btnFull').classList.toggle('active', mode === 'full');
-        document.getElementById('btnCarry').classList.toggle('active', mode === 'carry');
-        document.getElementById('fullInputs').classList.toggle('hidden', mode !== 'full');
-        document.getElementById('carryInputs').classList.toggle('hidden', mode !== 'carry');
-        calculateMarks();
-    }
-
-    function updateCompBadge(elementId, score, targetA) {
-        const badge = document.getElementById(elementId);
-        if (!badge) return;
-        if (score >= targetA) {
-            badge.innerText = 'Component: A Range';
-            badge.style.background = '#dcfce7';
-            badge.style.color = '#15803d';
-        } else {
-            badge.innerText = 'Component: Below A';
-            badge.style.background = '#fef3c7';
-            badge.style.color = '#b45309';
-        }
-    }
-
     function calculateMarks() {
+        // AS Raw Components
+        const p1 = parseFloat(document.getElementById('p1').value) || 0;
+        const p2 = parseFloat(document.getElementById('p2').value) || 0;
+        const p3 = parseFloat(document.getElementById('p3').value) || 0;
+
+        // Calculate Carried AS Score (P1 + P2 + P3*0.75) out of 130
+        const asWeighted = Math.round(p1 + p2 + (p3 * 0.75));
+
+        // A2 Raw Components
+        const p4 = parseFloat(document.getElementById('p4').value) || 0;
+        const p5 = parseFloat(document.getElementById('p5').value) || 0;
+
+        const totalWeighted = Math.round(asWeighted + p4 + p5);
+
+        // Selected Dataset & Buffer
         const seriesKey = document.getElementById('seriesSelect').value;
-        const selectedData = dataset[seriesKey];
+        const boundaries = dataset[seriesKey];
         const cushion = parseInt(document.getElementById('cushionInput').value) || 0;
 
-        let weightedScore = 0;
+        const effAstar = boundaries.Astar + cushion;
+        const effA     = boundaries.A + cushion;
+        const effB     = boundaries.B + cushion;
+        const effC     = boundaries.C + cushion;
+        const effD     = boundaries.D + cushion;
+        const effE     = boundaries.E + cushion;
 
-        if (currentMode === 'full') {
-            const p1 = parseFloat(document.getElementById('p1').value) || 0;
-            const p2 = parseFloat(document.getElementById('p2').value) || 0;
-            const p3 = parseFloat(document.getElementById('p3').value) || 0;
-            const p4 = parseFloat(document.getElementById('p4').value) || 0;
-            const p5 = parseFloat(document.getElementById('p5').value) || 0;
-
-            weightedScore = Math.round(p1 + p2 + (p3 * 0.75) + p4 + p5);
-
-            updateCompBadge('b1', p1, selectedData.comp.p1);
-            updateCompBadge('b2', p2, selectedData.comp.p2);
-            updateCompBadge('b3', p3, selectedData.comp.p3);
-            updateCompBadge('b4', p4, selectedData.comp.p4);
-            updateCompBadge('b5', p5, selectedData.comp.p5);
-        } else {
-            const as = parseFloat(document.getElementById('asScore').value) || 0;
-            const p4 = parseFloat(document.getElementById('p4_c').value) || 0;
-            const p5 = parseFloat(document.getElementById('p5_c').value) || 0;
-
-            weightedScore = Math.round(as + p4 + p5);
-
-            updateCompBadge('b4_c', p4, selectedData.comp.p4);
-            updateCompBadge('b5_c', p5, selectedData.comp.p5);
-        }
-
-        document.getElementById('totalScore').innerText = weightedScore;
-
-        // Apply Cushion to displayed target thresholds
-        const effAstar = selectedData.Astar + cushion;
-        const effA     = selectedData.A + cushion;
-        const effB     = selectedData.B + cushion;
-        const effC     = selectedData.C + cushion;
-        const effD     = selectedData.D + cushion;
-        const effE     = selectedData.E + cushion;
-
+        // Display Table Boundaries
         document.getElementById('t-Astar').innerText = effAstar;
         document.getElementById('t-A').innerText = effA;
         document.getElementById('t-B').innerText = effB;
@@ -399,21 +375,51 @@
         document.getElementById('t-D').innerText = effD;
         document.getElementById('t-E').innerText = effE;
 
-        let estimatedGrade = 'U';
-        if (weightedScore >= effAstar) estimatedGrade = 'A*';
-        else if (weightedScore >= effA) estimatedGrade = 'A';
-        else if (weightedScore >= effB) estimatedGrade = 'B';
-        else if (weightedScore >= effC) estimatedGrade = 'C';
-        else if (weightedScore >= effD) estimatedGrade = 'D';
-        else if (weightedScore >= effE) estimatedGrade = 'E';
+        document.getElementById('totalScore').innerText = totalWeighted;
+        document.getElementById('asCarryText').innerHTML = 
+            `Carried AS Score: <strong>${asWeighted} / 130</strong> (P1: ${p1}, P2: ${p2}, P3: ${p3 * 0.75} weighted)`;
 
-        document.getElementById('gradeBadge').innerText = 'Estimated Grade: ' + estimatedGrade;
+        // Selected Target Grade Calculation
+        const targetGradeKey = document.getElementById('targetGradeSelect').value;
+        const targetThreshold = boundaries[targetGradeKey] + cushion;
 
-        const cushionText = document.getElementById('cushionText');
-        if (cushion > 0) {
-            cushionText.innerText = `Targets include a +${cushion} mark safety buffer above raw historical boundaries.`;
+        // Required A2 Marks (P4 + P5)
+        const requiredA2Marks = targetThreshold - asWeighted;
+
+        const suggP4 = document.getElementById('suggP4');
+        const suggP5 = document.getElementById('suggP5');
+
+        if (requiredA2Marks <= 0) {
+            suggP4.innerText = "Suggested P4: Achieved!";
+            suggP5.innerText = "Suggested P5: Achieved!";
+        } else if (requiredA2Marks > 130) {
+            suggP4.innerText = "Target unachievable from current AS";
+            suggP5.innerText = "Target unachievable from current AS";
         } else {
-            cushionText.innerText = '';
+            // Proportional distribution between Paper 4 (100) and Paper 5 (30)
+            let recP4 = Math.min(100, Math.round(requiredA2Marks * (100 / 130)));
+            let recP5 = Math.min(30, Math.round(requiredA2Marks * (30 / 130)));
+
+            // Adjust rounding errors if combined recommendation is slightly under
+            if (recP4 + recP5 < requiredA2Marks && recP4 < 100) {
+                recP4 += (requiredA2Marks - (recP4 + recP5));
+            }
+
+            suggP4.innerText = `Suggested Target: ${recP4} / 100`;
+            suggP5.innerText = `Suggested Target: ${recP5} / 30`;
+        }
+
+        // Current Performance Status relative to Target
+        const gradeBadge = document.getElementById('gradeBadge');
+        if (totalWeighted >= targetThreshold) {
+            gradeBadge.innerText = `On Track for ${targetGradeKey.replace('star', '*')}`;
+            gradeBadge.style.background = '#dcfce7';
+            gradeBadge.style.color = '#15803d';
+        } else {
+            const marginNeeded = targetThreshold - totalWeighted;
+            gradeBadge.innerText = `Need +${marginNeeded} marks for Grade ${targetGradeKey.replace('star', '*')}`;
+            gradeBadge.style.background = '#fef3c7';
+            gradeBadge.style.color = '#b45309';
         }
     }
 
