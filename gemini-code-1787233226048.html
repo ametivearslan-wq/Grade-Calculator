@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spectrum Physics (9702) Grade Predictor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f172a;
+      --accent: #2563eb;
+      --accent-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      --header-gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      --card-bg: #ffffff;
+      --bg: #f8fafc;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --success: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 20px 12px;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .calculator-card {
+      width: 100%;
+      max-width: 680px;
+      background: var(--card-bg);
+      border-radius: 24px;
+      box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .header {
+      background: var(--header-gradient);
+      color: #ffffff;
+      padding: 32px 24px 28px;
+      text-align: center;
+      position: relative;
+    }
+
+    .school-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: #93c5fd;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .header p {
+      margin: 6px 0 0;
+      color: #94a3b8;
+      font-size: 0.88rem;
+    }
+
+    .body-content {
+      padding: 28px 24px;
+    }
+
+    .section-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--accent);
+      margin-top: 0;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .input-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 14px;
+      border-radius: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .input-card:focus-within {
+      border-color: var(--accent);
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+
+    .input-card label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .input-wrapper {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .input-card input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--primary);
+      outline: none;
+    }
+
+    .max-tag {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .progress-bar-bg {
+      height: 4px;
+      width: 100%;
+      background: #e2e8f0;
+      border-radius: 4px;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      border-radius: 4px;
+      transition: width 0.3s ease, background 0.3s ease;
+    }
+
+    /* Results Dashboard */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    @media (max-width: 520px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .dash-card {
+      background: #f1f5f9;
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid #e2e8f0;
+    }
+
+    .dash-card.highlight {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      border-color: #bfdbfe;
+    }
+
+    .dash-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .dash-value-group {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .dash-value {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .grade-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: var(--accent);
+      color: #ffffff;
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-left: auto;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+    }
+
+    /* Target Selector */
+    .target-box {
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 24px;
+      transition: border-color 0.2s ease;
+    }
+
+    .target-box:hover {
+      border-color: var(--accent);
+    }
+
+    .target-box select {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary);
+      outline: none;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+
+    /* Target Requirement Result */
+    .requirement-card {
+      background: var(--primary);
+      color: #ffffff;
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .req-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #94a3b8;
+    }
+
+    .req-value {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #38bdf8;
+      margin: 6px 0;
+    }
+
+    .req-subtext {
+      font-size: 0.82rem;
+      color: #cbd5e1;
+    }
+
+    /* Footer Credit */
+    .footer-credit {
+      text-align: center;
+      padding: 20px 24px;
+      background: #f8fafc;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .footer-credit span {
+      color: #ef4444;
+    }
+  </style>
+</head>
+<body>
+
+<div class="calculator-card">
+  <!-- Header with School Branding -->
+  <div class="header">
+    <div class="school-badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      Spectrum International School, Astana
+    </div>
+    <h1>A-Level Physics (9702) Calculator</h1>
+    <p>Components 12, 22, 33 → Target A2 (42, 52)</p>
+  </div>
+
+  <div class="body-content">
+    <!-- Step 1: Input Marks -->
+    <div class="section-title">1. AS Level Raw Marks</div>
+    <div class="input-grid">
+      <div class="input-card">
+        <label for="p12">Paper 12</label>
+        <div class="input-wrapper">
+          <input type="number" id="p12" min="0" max="40" placeholder="0" oninput="calculate()">
+          <span class="max-tag">/ 40</span>
+        </div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="p12-bar"></div></div>
+      </div>
+
+      <div class="input-card">
+        <label for="p22">Paper 22</label>
+        <div class="input-wrapper">
+          <input type="number" id="p22" min="0" max="60" placeholder="0" oninput="calculate()">
+          <span class="max-tag">/ 60</span>
+        </div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="p22-bar"></div></div>
+      </div>
+
+      <div class="input-card">
+        <label for="p33">Paper 33</label>
+        <div class="input-wrapper">
+          <input type="number" id="p33" min="0" max="40" placeholder="0" oninput="calculate()">
+          <span class="max-tag">/ 40</span>
+        </div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="p33-bar"></div></div>
+      </div>
+    </div>
+
+    <!-- AS Dashboard Result -->
+    <div class="dashboard-grid">
+      <div class="dash-card">
+        <div class="dash-title">AS Weighted Score</div>
+        <div class="dash-value-group">
+          <div class="dash-value" id="asWeighted">0.0</div>
+          <span style="font-size: 0.9rem; font-weight:700; color:var(--muted);">/ 130</span>
+        </div>
+      </div>
+      <div class="dash-card highlight">
+        <div class="dash-title">Predicted AS Grade</div>
+        <div class="dash-value-group" style="align-items: center;">
+          <div style="font-size: 0.85rem; font-weight:700; color:#1e40af;">Current Standing:</div>
+          <div class="grade-badge" id="asGrade">-</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Goal Target -->
+    <div class="section-title">2. Set Desired A-Level Grade</div>
+    <div class="target-box">
+      <label style="font-size: 0.75rem; font-weight:800; color:var(--muted); text-transform:uppercase;">Target Grade</label>
+      <select id="targetGrade" onchange="calculate()">
+        <option value="203">Grade A* (Threshold: 203 / 260)</option>
+        <option value="177" selected>Grade A (Threshold: 177 / 260)</option>
+        <option value="151">Grade B (Threshold: 151 / 260)</option>
+        <option value="126">Grade C (Threshold: 126 / 260)</option>
+        <option value="101">Grade D (Threshold: 101 / 260)</option>
+        <option value="76">Grade E (Threshold: 76 / 260)</option>
+      </select>
+    </div>
+
+    <!-- Final A2 Requirement Card -->
+    <div class="requirement-card">
+      <div class="req-title">Combined A2 Target (Paper 42 + Paper 52)</div>
+      <div class="req-value" id="a2Requirement">Enter AS marks above</div>
+      <div class="req-subtext" id="a2Subtext">P42 is out of 100 raw marks • P52 is out of 30 raw marks</div>
+    </div>
+  </div>
+
+  <!-- Footer with Personal Teacher Credit -->
+  <div class="footer-credit">
+    Crafted with <span>❤️</span> by <strong>Mr. Arslan</strong> for his students
+  </div>
+</div>
+
+<script>
+  function updateBar(inputId, barId, max) {
+    const val = parseFloat(document.getElementById(inputId).value) || 0;
+    const bar = document.getElementById(barId);
+    const percentage = Math.min(Math.max((val / max) * 100, 0), 100);
+    bar.style.width = percentage + '%';
+    
+    if (percentage >= 75) bar.style.background = '#10b981';
+    else if (percentage >= 50) bar.style.background = '#2563eb';
+    else if (percentage >= 30) bar.style.background = '#f59e0b';
+    else bar.style.background = '#ef4444';
+  }
+
+  function calculate() {
+    updateBar('p12', 'p12-bar', 40);
+    updateBar('p22', 'p22-bar', 60);
+    updateBar('p33', 'p33-bar', 40);
+
+    const p12 = parseFloat(document.getElementById('p12').value) || 0;
+    const p22 = parseFloat(document.getElementById('p22').value) || 0;
+    const p33 = parseFloat(document.getElementById('p33').value) || 0;
+    const targetThreshold = parseFloat(document.getElementById('targetGrade').value);
+
+    // AS Weighted Score Calculation (P33 factor = 0.75)
+    const asWeighted = p12 + p22 + (p33 * 0.75);
+    document.getElementById('asWeighted').innerText = asWeighted.toFixed(1);
+
+    // Grade Determination
+    let asGrade = 'U';
+    if (asWeighted >= 95) asGrade = 'a';
+    else if (asWeighted >= 83) asGrade = 'b';
+    else if (asWeighted >= 71) asGrade = 'c';
+    else if (asWeighted >= 59) asGrade = 'd';
+    else if (asWeighted >= 47) asGrade = 'e';
+    
+    document.getElementById('asGrade').innerText = asGrade;
+
+    // A2 Target Calculation
+    const neededA2Weighted = targetThreshold - asWeighted;
+    const a2ReqElement = document.getElementById('a2Requirement');
+    const a2SubtextElement = document.getElementById('a2Subtext');
+
+    if (neededA2Weighted <= 0) {
+      a2ReqElement.innerText = "Goal Achieved!";
+      a2SubtextElement.innerText = "Your current AS score already meets this A-Level target threshold.";
+    } else if (neededA2Weighted > 130) {
+      a2ReqElement.innerText = "Target Exceeds Max Marks";
+      a2SubtextElement.innerText = `Requires ${neededA2Weighted.toFixed(1)} marks in A2 (Max possible is 130).`;
+    } else {
+      a2ReqElement.innerText = `${neededA2Weighted.toFixed(1)} / 130 marks`;
+      
+      // Breakdown estimate based on proportional paper split (100:30)
+      const estP42 = Math.min(100, Math.round(neededA2Weighted * (100 / 130)));
+      const estP52 = Math.min(30, Math.round(neededA2Weighted * (30 / 130)));
+      a2SubtextElement.innerText = `Suggested split: ~${estP42}/100 in Paper 42 and ~${estP52}/30 in Paper 52.`;
+    }
+  }
+</script>
+
+</body>
+</html>
